@@ -15,7 +15,7 @@ const recipeSchema = new Schema({
   },
 
   ingredients: {
-    type: [String],
+    type: [String], //shortcut, ingredients: [String]
   },
 
   cuisine:{
@@ -31,7 +31,7 @@ const recipeSchema = new Schema({
   image: {
     type: String,
     default: "https://images.media-allrecipes.com/images/75131.jpg"
-  },
+  }, //in MongoDB, we typically store images as URL strings. Cloudinary allows us to upload images and obtain the URL string.
 
   duration: {
     type: Number,
@@ -39,7 +39,7 @@ const recipeSchema = new Schema({
   },
 
   creator: {
-    type: String
+    type: String //no need to have curly braces; creator: String
   },
 
   created: {
