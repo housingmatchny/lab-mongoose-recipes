@@ -18,16 +18,18 @@ mongoose
   })
   .then(() => {
     // Recipe.create(data);  Iteration 2
-    Recipe.insertMany(data) // Iteration 3
-    data.forEach(recipe => console.log(recipe.title))
     return Recipe.insertMany(data)
   })
-  .then(() => {
-    return Recipe.findOneAndUpdate({title: "Rigatoni alla Genovese"}, { duration: 100 }) // Iteration 4, findOneAndUpdate(arg1 = condition, arg2 = updated)
+  .then((recipes) => {
+    recipes.forEach(recipe => console.log(recipe.title))
+    return Recipe.findOneAndUpdate({title: "Rigatoni alla Genovese"}, { duration: 100 }, {new: true}) // Iteration 4, findOneAndUpdate(arg1 = condition, arg2 = updated)
   })
-  .then(() => {
-    Recipe.deleteOne({title: "Carrot Cake"})//{title: "Carrot Cake"})//Iteration 5
-    console.log("A success message")
+  .then((rigatoni) => {
+    console.log("rigatoni successfully updated: ", rigatoni)
+    return Recipe.deleteOne({title: "Carrot Cake"})//Iteration 5
+  })
+  .then((deleted) => {
+    console.log("A success message", deleted)
   })
   .catch(error => {
     console.error('Error connecting to the database', error);
@@ -35,7 +37,8 @@ mongoose
 ;
 
 //Close the connection
-mongoose.connection.close(); //Iteration 6
+mongoose.connection.close(); 
+//Iteration 6
 
 
 
