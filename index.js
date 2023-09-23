@@ -17,26 +17,30 @@ mongoose
     return Recipe.deleteMany()
   })
   .then(() => {
-    // Recipe.create(data);  Iteration 2
-    Recipe.insertMany(data) // Iteration 3
-    data.forEach(recipe => console.log(recipe.title))
-    return Recipe.insertMany(data)
+    let newRecipe = {
+      title: "BAJ's Recipe",//Brennen Alfonso Jennifer = BAJ
+      cuisine: 'Mongo'
+    }
+    return Recipe.create(newRecipe); //Iteration 2
   })
-  .then(() => {
-    return Recipe.findOneAndUpdate({title: "Rigatoni alla Genovese"}, { duration: 100 }) // Iteration 4, findOneAndUpdate(arg1 = condition, arg2 = updated)
+  .then((newRecipe) => {
+    console.log(newRecipe.title)//Iteration 2: print one new recipe title
+    return Recipe.insertMany(data)//Iteration 3
   })
-  .then(() => {
-    Recipe.deleteOne({title: "Carrot Cake"})//{title: "Carrot Cake"})//Iteration 5
-    console.log("A success message")
+  .then((multipleRecipes) => {
+    multipleRecipes.forEach(recipe => console.log(recipe.title)) //Iteration 3:print multiple recipe titles
+    return Recipe.findOneAndUpdate({title: "Rigatoni alla Genovese"}, { duration: 100 }, {new: true}) // Iteration 4, findOneAndUpdate(arg1 = condition, arg2 = updated)
+  })
+  .then((rigatoni) => {
+    console.log("rigatoni successfully updated: ", rigatoni) //Iteration 4: print sucess message
+    return Recipe.deleteOne({title: "Carrot Cake"})//Iteration 5: delete
+  })
+  .then((deleted) => {
+    console.log("A success message", deleted)//Iteration 5: print success message
+    mongoose.connection.close(); //Close the connection Iteration 6
   })
   .catch(error => {
     console.error('Error connecting to the database', error);
   })
 ;
-
-//Close the connection
-mongoose.connection.close(); //Iteration 6
-
-
-
 
